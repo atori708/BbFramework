@@ -21,6 +21,17 @@ struct s_cbChangeEveryFrame
 	DirectX::XMFLOAT4X4	m_matView;
 	DirectX::XMFLOAT4	m_directionalLight;		// 平行光源向き(wはライトの強さ)
 	DirectX::XMFLOAT4	m_directionalLightColor;	// 平行光源色
+
+	s_cbChangeEveryFrame()
+	{
+
+	}
+	s_cbChangeEveryFrame(DirectX::XMFLOAT4X4& matView, DirectX::XMFLOAT4& directionLight, DirectX::XMFLOAT4& lightColor)
+	{
+		m_matView = matView;
+		m_directionalLight = directionLight;
+		m_directionalLightColor = lightColor;
+	}
 };
 
 struct s_cbChangesAtEveryObject

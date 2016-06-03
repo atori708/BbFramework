@@ -77,7 +77,7 @@ public:
 	int ResistShaderToStaticRenderer(D3D11_SHADER_TYPE shaderType, int shaderIndex);
 	int ResistShaderToStaticRenderer(D3D11_SHADER_TYPE shaderType, const wchar_t* pShaderFile, const char* pEntryPoint);
 
-	bool Update(const DirectX::XMMATRIX& pProjectionMatrix, const DirectX::XMMATRIX& pViewMatrix);
+	bool Update(const DirectX::XMMATRIX& pProjectionMatrix, const s_cbChangeEveryFrame& changeEveryFrame);
 	bool Render();
 
 	std::shared_ptr<ID3D11Device>	GetD3D11Device();

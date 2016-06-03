@@ -544,13 +544,13 @@ int CD3D11Graphics::ResistShaderToStaticRenderer(D3D11_SHADER_TYPE shaderType, c
  * @author   N.kaji
  * @date     2016/05/22
  */
- bool CD3D11Graphics::Update(const DirectX::XMMATRIX& pProjectionMatrix, const DirectX::XMMATRIX& pViewMatrix)
+ bool CD3D11Graphics::Update(const DirectX::XMMATRIX& pProjectionMatrix, const s_cbChangeEveryFrame& changeEveryFrame)
 {
 	using namespace DirectX;
 	XMStoreFloat4x4(&m_pChangeWindowResizeConstantBufferStruct.m_matProjection, pProjectionMatrix);
 	m_changeWindowResizeConstantBuffer.Update(m_pImmediateContext, m_pChangeWindowResizeConstantBufferStruct);
 
-	XMStoreFloat4x4(&m_pChangeEveryFrameConstantBufferStruct.m_matView, pViewMatrix);
+	m_pChangeEveryFrameConstantBufferStruct = changeEveryFrame;
 	m_changeEveryFrameConstantBuffer.Update(m_pImmediateContext, m_pChangeEveryFrameConstantBufferStruct);
 
 	//m_pRenderers[0]->SetChangeEveryFrameConstatBuffer(m_changeEveryFrameConstantBuffer.GetConstantBuffer());
