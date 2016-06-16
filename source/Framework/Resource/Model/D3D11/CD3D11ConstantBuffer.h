@@ -5,18 +5,18 @@
 #include<memory>
 #define CONSTANT_BUFFER_NONE	(0xffffffff)
 
-struct s_constantBufferStruct
+struct SConstantBufferStruct
 {
 };
 
 struct s_cbChangeWindowResizing
-	:public s_constantBufferStruct
+	:public SConstantBufferStruct
 {
 	DirectX::XMFLOAT4X4 m_matProjection;
 };
 
 struct s_cbChangeEveryFrame
-	:public s_constantBufferStruct
+	:public SConstantBufferStruct
 {
 	DirectX::XMFLOAT4X4	m_matView;
 	DirectX::XMFLOAT4	m_directionalLight;		// ïΩçsåıåπå¸Ç´(wÇÕÉâÉCÉgÇÃã≠Ç≥)
@@ -35,7 +35,7 @@ struct s_cbChangeEveryFrame
 };
 
 struct s_cbChangesAtEveryObject
-	:public s_constantBufferStruct
+	:public SConstantBufferStruct
 {
 	DirectX::XMFLOAT4X4	m_matWorld;
 	DirectX::XMFLOAT4X4	m_matWorldInv;
@@ -53,7 +53,7 @@ public:
 	~CD3D11ConstantBuffer();
 
 	HRESULT	CreateConstantBuffer( std::shared_ptr<ID3D11Device> pDevice, UINT slotNum, UINT dataSize);
-	HRESULT	Update(std::shared_ptr<ID3D11DeviceContext> pDeviceContext, s_constantBufferStruct& _pUpdateData);
+	HRESULT	Update(std::shared_ptr<ID3D11DeviceContext> pDeviceContext, SConstantBufferStruct& _pUpdateData);
 	std::shared_ptr<ID3D11Buffer> const	GetConstantBuffer()const;
 	UINT GetStartSlot()const;
 	void DestroyConstantBuffer();

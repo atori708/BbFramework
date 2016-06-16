@@ -49,7 +49,7 @@ HRESULT CD3D11ConstantBuffer::CreateConstantBuffer(std::shared_ptr<ID3D11Device>
 * @author   N.Kaji
 * @date		2014/07/27
 ------------------------------*/
-HRESULT	CD3D11ConstantBuffer::Update(std::shared_ptr<ID3D11DeviceContext> pDeviceContext, s_constantBufferStruct& _pUpdateData)
+HRESULT	CD3D11ConstantBuffer::Update(std::shared_ptr<ID3D11DeviceContext> pDeviceContext, SConstantBufferStruct& _pUpdateData)
 {
 	if (pDeviceContext == nullptr || m_pCbuffer == nullptr ) {
 		return false;
