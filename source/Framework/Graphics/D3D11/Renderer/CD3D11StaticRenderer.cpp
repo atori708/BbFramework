@@ -2,7 +2,8 @@
 #include"Framework\Resource\Shader\CD3D11ShaderManager.h"
 #include"Framework\Resource\CD3D11ResourceManager.h"
 
-CD3D11StaticRenderer::CD3D11StaticRenderer(std::vector< std::shared_ptr<s_d3d11RenderTarget>> pRenderTargets, std::shared_ptr< ID3D11DepthStencilView> pDepthStencilView)
+CD3D11StaticRenderer::CD3D11StaticRenderer(std::shared_ptr<ID3D11Device> pDevice, std::vector< std::shared_ptr<s_d3d11RenderTarget>> pRenderTargets, std::shared_ptr< ID3D11DepthStencilView> pDepthStencilView)
+	:m_pDevice( pDevice)
 {
 	// S---------- Graphicsから受け取ったレンダーターゲットを配列に格納する
 	m_useRenderTargetCount = pRenderTargets.size();
@@ -21,12 +22,14 @@ CD3D11StaticRenderer::CD3D11StaticRenderer(std::vector< std::shared_ptr<s_d3d11R
 
 	m_ppDepthStencilViews.get()[0] = pDepthStencilView.get();
 	// E---------- Graphicsから受け取ったレンダーターゲットを配列に格納する
+
+	// トゥーン用のテクスチャをロードしとく
+	m_pToonSRVIndex = D3D11ResourceManager.LoadTexture(m_pDevice, L"resource/", L"toon.png");
 }
 
 CD3D11StaticRenderer::~CD3D11StaticRenderer()
 {
 }
-
 
 int CD3D11StaticRenderer::ResistDrawObject(std::shared_ptr<CDrawModelBase> pDrawObject)
 {
@@ -72,15 +75,17 @@ void CD3D11StaticRenderer::Render(std::shared_ptr<ID3D11DeviceContext> pDeviceCo
 		pDeviceContext->IASetIndexBuffer(drawModel->GetIndexBuffer().get(), drawModel->GetIndexFormat(), 0);
 
 		// マテリアル毎に描画
-		for (int i = 0; i < drawModel->GetNumMaterial(); ++i) {
+		for (unsigned int i = 0; i < drawModel->GetNumMaterial(); ++i) {
+			pBuffer[0] = drawModel->GetMaterialCBuffer(i).get();
+			pDeviceContext->VSSetConstantBuffers(drawModel->GetMaterialCBufferStartSlot(i), 1, pBuffer);
 			const CD3D11ShaderManager& shaderManager = D3D11ResourceManager.GetShaderManager();
 			pDeviceContext->IASetInputLayout(shaderManager.GetInputLayout(drawModel->GetInputLayoutIndex(i, 0)).get());
 			pDeviceContext->VSSetShader(shaderManager.GetVertexShader(drawModel->GetVertexShaderIndex(i, 0)).get(), nullptr, 0);
 			pDeviceContext->PSSetShader(shaderManager.GetPixelShader(drawModel->GetPixelShaderIndex(i, 0)).get(), nullptr, 0);
-			ID3D11ShaderResourceView* pSRVs[1] = { D3D11ResourceManager.GetShaderResourceView(drawModel->GetShaderResourceViewIndex(i, 0)).get() };
-			ID3D11SamplerState*	pSamplerStates[1] = { D3D11ResourceManager.GetSamplerState(drawModel->GetSamplerStateIndex(i, 0)).get() };
-			pDeviceContext->PSSetShaderResources(0, 1, pSRVs);
-			pDeviceContext->PSSetSamplers(0, 1, pSamplerStates);
+			ID3D11ShaderResourceView* pSRVs[2] = { D3D11ResourceManager.GetShaderResourceView(drawModel->GetShaderResourceViewIndex(i, 0)).get(), D3D11ResourceManager.GetShaderResourceView(m_pToonSRVIndex).get() };
+			ID3D11SamplerState*	pSamplerStates[2] = { D3D11ResourceManager.GetSamplerState(drawModel->GetSamplerStateIndex(i, 0)).get(), D3D11ResourceManager.GetSamplerState(m_pToonSRVIndex).get() };
+			pDeviceContext->PSSetShaderResources(0, 2, pSRVs);
+			pDeviceContext->PSSetSamplers(0, 2, pSamplerStates);
 			pDeviceContext->DrawIndexed(drawModel->GetIndexCounts(i), drawModel->GetIndexStartLocation(i), 0);
 		}
 	}

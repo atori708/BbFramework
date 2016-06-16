@@ -6,7 +6,7 @@
 class CD3D11ShaderManager;
 
 /*!
- * @brief    静的なオブジェクトを描画する
+ * @brief    オブジェクトを描画する
  * @note     
  * @author   N.kaji
  * @date     2016/05/22
@@ -15,6 +15,7 @@ class CD3D11StaticRenderer
 	:public ID3D11Renderer
 {
 private:
+	std::shared_ptr<ID3D11Device>&	m_pDevice;
 	std::vector<std::shared_ptr<CD3D11DrawModel3D>> m_pDrawObjects;
 	ID3D11Buffer* m_pConstantBuffers[2];	// changeWindowResizeとchangeEveryFrameの定数バッファまとめた
 
@@ -26,10 +27,12 @@ private:
 
 	//int m_backBufferRenderTargetIndex = 0;
 	int m_useRenderTargetCount;	// このレンダラで使うレンダーターゲットの数(DepthStencilViewの数も同じである必要あり)
+
+	int	m_pToonSRVIndex;	// トゥーン表現用のテクスチャ
 	
 public:
 	CD3D11StaticRenderer() = delete;
-	CD3D11StaticRenderer(std::vector< std::shared_ptr<s_d3d11RenderTarget>> pRenderTargets, std::shared_ptr< ID3D11DepthStencilView> pDepthStencilView);
+	CD3D11StaticRenderer(std::shared_ptr<ID3D11Device> pDevice, std::vector< std::shared_ptr<s_d3d11RenderTarget>> pRenderTargets, std::shared_ptr< ID3D11DepthStencilView> pDepthStencilView);
 	~CD3D11StaticRenderer();
 
 	int ResistDrawObject(std::shared_ptr<CDrawModelBase> pDrawObject)override;
