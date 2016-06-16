@@ -4,18 +4,17 @@
 #include"Framework\Resource\CD3D11ResourceManager.h"
 #include"Framework\Game\Object\CGameObject3D.h"
 #include"Framework\Resource\Model\D3D11\CD3D113DModelLoader.h"
-#include"../CD3D11FBXModelLoader.h"
 
 int APIENTRY WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	CWindowsApplication application(L"テストでござる");
+	CWindowsApplication application(L"viewer");
 	CD3D11Graphics graphics;
 
 	application.SetWindowsCommandLine(hInstance, lpCmdLine, nCmdShow);
-	application.SetWindowSize(WINDOW_SIZE_TYPE::SIZE_1280x720);
+	application.SetWindowSize(WINDOW_SIZE_TYPE::SIZE_640x480);
 
 	application.Initialize();
 	graphics.Initialize(&application);
@@ -25,31 +24,40 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	std::shared_ptr<CGameObject3D> planeObject = std::make_shared<CGameObject3D>();
 
 	CD3D113DModelLoader loader;
-	CD3D11FBXModelLoader loaderFbx;
+	//CD3D11FBXModelLoader loader;
 	std::shared_ptr<CD3D11DrawModel3D>	model = std::make_shared<CD3D11DrawModel3D>();
-	loaderFbx.Load(graphics.GetD3D11Device(), L"resource/sword/sword.fbx", model);
-	//bool result = loader.Load(graphics.GetD3D11Device(), L"resource/rapi/rapi.pmd", model);
+	//loader.Load(graphics.GetD3D11Device(), L"resource/model/rapi/rapi.pmd", model);
+	loader.Load(graphics.GetD3D11Device(), L"resource/model/dragon_.obj", model);
+	//loader.Load(graphics.GetD3D11Device(), L"resource/model/miku/初音ミク.pmd", model);
+	//bool result = loader.Load(graphics.GetD3D11Device(), L"resource/model/bladeInSoul.fbx", model);
 	planeObject->SetDrawObject(model);
 
 	pPlaneMesh = gCreater.CreatePlanePolygon(100, 2);
-	//planeObject->SetDrawObject(pPlaneMesh);
 	graphics.RegistObject2StaticRenerer(planeObject);
 
 	// ビュー行列とプロジェクション行列用意
 	using namespace DirectX;
 	const RECT_SIZE& clientSize = application.GetClientSize();
-	XMMATRIX viewMatrix = XMMatrixTranspose(XMMatrixLookAtLH(XMVectorSet(0, 2, 15, 0), XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0)));
-	XMMATRIX projectionMatrix = XMMatrixTranspose((XMMatrixPerspectiveFovLH(XM_PIDIV4, (float)clientSize.width / clientSize.height, 1.0f, 200.0f)));
+	XMMATRIX viewMatrix = XMMatrixTranspose(XMMatrixLookAtLH(XMVectorSet(-1.3, 0, 0, 0), XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0)));
+	XMMATRIX projectionMatrix = XMMatrixTranspose((XMMatrixPerspectiveFovLH(XM_PIDIV4, (float)clientSize.width / clientSize.height, 1.0f, 300.0f)));
 	XMFLOAT4X4 viewMatrixVelue;
 	XMStoreFloat4x4(&viewMatrixVelue, viewMatrix);
-	s_cbChangeEveryFrame changeEveryFrame{ viewMatrixVelue, XMFLOAT4(0.5f, 0.5f, 0.5f, 0), XMFLOAT4(1, 1, 1, 1) };
-	D3D11ResourceManager.CompileVertexShader( graphics.GetD3D11Device(),L"vs.fx", "vsMain");
-	D3D11ResourceManager.CompilePixelShader(graphics.GetD3D11Device(),L"vs.fx", "psMain");
+	s_cbChangeEveryFrame changeEveryFrame{ viewMatrixVelue, XMFLOAT4(0.5f, -0.5f, 0.5f, 0), XMFLOAT4(1, 1, 1, 1) };
 
+	// シェーダコンパイル
+	D3D11ResourceManager.CompileVertexShader( graphics.GetD3D11Device(),L"toonTextureColor.fx", "vsMain");
+	D3D11ResourceManager.CompilePixelShader(graphics.GetD3D11Device(),L"toonTextureColor.fx", "psMain");
+	D3D11ResourceManager.CompileVertexShader(graphics.GetD3D11Device(), L"toonDiffuseColor.fx", "vsMain");
+	D3D11ResourceManager.CompilePixelShader(graphics.GetD3D11Device(), L"toonDiffuseColor.fx", "psMain");
+	D3D11ResourceManager.CompileVertexShader(graphics.GetD3D11Device(), L"diffuseColor.fx", "vsMain");
+	D3D11ResourceManager.CompilePixelShader(graphics.GetD3D11Device(), L"diffuseColor.fx", "psMain");
+
+	// ゲームループ
 	while (!application.DispatchedWMQuitMessage()) {
 		graphics.Update(projectionMatrix, changeEveryFrame);
-		//graphics.Update(projectionMatrix, viewMatrix);
 		graphics.Render();
+
+	//	Sleep(5);
 	}
 
 	graphics.Finalize();

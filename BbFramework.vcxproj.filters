@@ -42,9 +42,6 @@
     <ClCompile Include="source\Framework\Game\Object\CGameObject3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CGameSituation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\Framework\Resource\Model\D3D11\CD3D11ConstantBuffer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\Framework\Resource\Model\D3D11\CD3D113DModelLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Resource\Model\D3D11\CD3D11FBXModelLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,9 +104,6 @@
     <ClInclude Include="source\Framework\Game\Object\CGameObject3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CGameSituation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\Framework\Resource\Model\D3D11\CD3D11ConstantBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -129,6 +126,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\Framework\Resource\Model\D3D11\CD3D113DModelLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Resource\Model\D3D11\CD3D11FBXModelLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Resource\Model\PmdDataStruct.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

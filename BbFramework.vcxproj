@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Framework\Resource\Model\D3D11\CD3D11FBXModelLoader.cpp" />
     <ClCompile Include="source\Framework\Resource\CD3D11ResourceManager.cpp" />
     <ClCompile Include="source\Framework\Resource\Model\D3D11\CD3D113DModelLoader.cpp" />
     <ClCompile Include="source\Framework\Resource\Texture\CD3D11TextureLoader.cpp" />
-    <ClCompile Include="CGameSituation.cpp" />
     <ClCompile Include="source\Framework\Game\Object\CGameObject3D.cpp" />
     <ClCompile Include="source\Framework\Graphics\D3D11\Renderer\CD3D11StaticRenderer.cpp" />
     <ClCompile Include="source\Framework\Graphics\D3D11\Renderer\ID3D11Renderer.cpp" />
@@ -39,10 +39,11 @@
     <ClCompile Include="source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Framework\Resource\Model\D3D11\CD3D11FBXModelLoader.h" />
     <ClInclude Include="source\Framework\Resource\Model\D3D11\CD3D113DModelLoader.h" />
     <ClInclude Include="source\Framework\Resource\CD3D11ResourceManager.h" />
+    <ClInclude Include="source\Framework\Resource\Model\PmdDataStruct.h" />
     <ClInclude Include="source\Framework\Resource\Texture\CD3D11TextureLoader.h" />
-    <ClInclude Include="CGameSituation.h" />
     <ClInclude Include="source\Framework\Game\Object\CGameObject3D.h" />
     <ClInclude Include="source\Framework\Graphics\D3D11\Renderer\ID3D11Renderer.h" />
     <ClInclude Include="source\Framework\Graphics\D3D11\Renderer\CD3D11StaticRenderer.h" />
@@ -132,13 +133,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\include;D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\API\DirectXTex\bin\Desktop_2015_Win10\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\lib\vs2015\x86\debug;D:\API\DirectXTex\bin\Desktop_2015_Win10\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -149,13 +150,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\include;D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\API\DirectXTex\bin\Desktop_2015_Win10\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\lib\vs2015\x64\debug;D:\API\DirectXTex\bin\Desktop_2015_Win10\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -168,15 +169,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\include;D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\API\DirectXTex\bin\Desktop_2015_Win10\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\lib\vs2015\x86\release;D:\API\DirectXTex\bin\Desktop_2015_Win10\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,15 +190,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\include;D:\API\DirectXTex\include;D:\work\visualstudio\BbFramework\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\API\DirectXTex\bin\Desktop_2015_Win10\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Program Files\Autodesk\FBX\FBX SDK\2016.1.1\lib\vs2015\x64\release;D:\API\DirectXTex\bin\Desktop_2015_Win10\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
