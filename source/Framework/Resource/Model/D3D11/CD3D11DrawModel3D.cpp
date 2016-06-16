@@ -12,7 +12,7 @@ CD3D11DrawModel3D::~CD3D11DrawModel3D()
 void CD3D11DrawModel3D::SetWorldMatrix(std::shared_ptr<ID3D11Device> pDevice, const DirectX::XMMATRIX& worldMatrix)
 {
 	DirectX::XMStoreFloat4x4(&m_changeEveryModelConstantBufferStruct.m_pWorldMatrix, worldMatrix);
-	m_changeEveryModelConstantBuffer.CreateConstantBuffer(pDevice, 2, sizeof(s_cbChangeEveryModel));
+	m_changeEveryModelConstantBuffer.CreateConstantBuffer(pDevice, 2, sizeof(SConstantBufferChangeEveryModel));
 }
 
 bool CD3D11DrawModel3D::Update(std::shared_ptr<ID3D11DeviceContext> pDeviceContext)
@@ -24,6 +24,11 @@ bool CD3D11DrawModel3D::Update(std::shared_ptr<ID3D11DeviceContext> pDeviceConte
 	if (FAILED(m_changeEveryModelConstantBuffer.Update(pDeviceContext, m_changeEveryModelConstantBufferStruct))) {
 		return false;
 	}
+
+	for (auto material : m_materials) {
+		material.m_cbEveryMaterial.Update(pDeviceContext, material.m_cbMaterialStruct);
+	}
+
 
 	return true;
 }
@@ -149,7 +154,7 @@ HRESULT	CD3D11DrawModel3D::UpdateMaterial(std::shared_ptr<ID3D11DeviceContext> _
 	return m_materials[_materialIndex].m_cbEveryMaterial.Update(_pDeviceContext, m_materials[_materialIndex].m_cbMaterialStruct);
 }
 
-unsigned int	CD3D11DrawModel3D::GetMaterialCBufferSlotNum(unsigned int _materialIndex)const
+unsigned int	CD3D11DrawModel3D::GetMaterialCBufferStartSlot(unsigned int _materialIndex)const
 {
 	if (_materialIndex >= m_numMaterial)
 		return 16;	// 16‚Í‚ ‚è‚¦‚È‚¢’l‚È‚Ì‚Å
