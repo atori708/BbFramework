@@ -51,7 +51,7 @@ bool CD3D11Graphics::Initialize(const CApplicationBase* application)
 //	m_changeEveryFrameConstantBuffer.Update(m_pImmediateContext, m_pChangeEveryFrameConstantBufferStruct);
 
 	// ƒŒƒ“ƒ_ƒ‰‚ð“o˜^
-	std::shared_ptr<CD3D11StaticRenderer>	pRenderer = std::make_shared<CD3D11StaticRenderer>(m_pRenderTargets, m_pDepthStencilView);
+	std::shared_ptr<CD3D11StaticRenderer>	pRenderer = std::make_shared<CD3D11StaticRenderer>(m_pDevice, m_pRenderTargets, m_pDepthStencilView);
 	pRenderer->SetChangeWindowResizeConstantBuffer(m_changeWindowResizeConstantBuffer.GetConstantBuffer());
 	pRenderer->SetChangeEveryFrameConstatBuffer(m_changeEveryFrameConstantBuffer.GetConstantBuffer());
 	m_staticRendererIndex = this->RegistRenderer(pRenderer);

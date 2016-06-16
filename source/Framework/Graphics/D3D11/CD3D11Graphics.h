@@ -37,7 +37,7 @@ private:
 	std::shared_ptr<ID3D11DepthStencilView> m_pDepthStencilView;
 	std::shared_ptr<ID3D11ShaderResourceView> m_pDepthStencilSRV;
 
-	const float m_backBufferClearColor[4] = { 1.0f, 0.0f, 1.0f, 0.0f };
+	const float m_backBufferClearColor[4] = { 0.1f, 0.1f, 0.3f, 0.0f };
 
 	// MSAA使うかと、クオリティ(変更するならスワップチェインとデプスステンシルバッファ、全てのレンダーターゲット作り直し)
 	//bool m_isMSAA;
@@ -46,7 +46,6 @@ private:
 	// レンダラ
 	std::vector<std::shared_ptr<ID3D11Renderer>>	m_pRenderers;
 	int m_staticRendererIndex;
-
 
 	// 定数バッファ
 	s_cbChangeWindowResizing	m_pChangeWindowResizeConstantBufferStruct;
