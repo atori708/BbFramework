@@ -8,6 +8,7 @@
 // テクスチャ構造体
 struct s_TextureData
 {
+	std::wstring m_fileName;
 	std::shared_ptr<ID3D11Resource>				m_pTexture;
 	std::shared_ptr<ID3D11ShaderResourceView>	m_pSRV;
 	std::shared_ptr<ID3D11SamplerState>			m_pSamplerState;
@@ -45,7 +46,7 @@ public:
 	CD3D11ResourceManager& operator=(CD3D11ResourceManager&&) = delete;
 
 	// テクスチャ関連
-	UINT	LoadTexture(std::shared_ptr<ID3D11Device> pDevice, const wchar_t* pFileName);
+	UINT	LoadTexture(std::shared_ptr<ID3D11Device> pDevice, std::wstring filePath, const wchar_t* pFileName);
 	const std::shared_ptr<ID3D11ShaderResourceView>	GetShaderResourceView( UINT _index)const;
 	const std::shared_ptr<ID3D11SamplerState>	GetSamplerState( UINT _index)const;
 

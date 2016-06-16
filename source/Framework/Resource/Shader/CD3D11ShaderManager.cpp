@@ -140,7 +140,6 @@ HRESULT	CD3D11ShaderManager::ShaderCompile(std::wstring _filePath, std::string _
 	HRESULT hr;
 	ID3DBlob* pError = nullptr;
 	_filePath = this->SHADER_FILE_PATH + _filePath;
-
 	hr = D3DCompileFromFile(_filePath.c_str(), nullptr, nullptr, _entryPoint.c_str(), _profile.c_str(),
 		0, 0,
 		_ppOut, &pError);

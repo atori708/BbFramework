@@ -122,12 +122,12 @@ std::shared_ptr<CD3D11DrawModel3D> CGeometoryCreater::CreatePlanePolygon(float s
 	pOut->m_materials[0].m_cbEveryMaterial.CreateConstantBuffer(m_pDevice, 3, sizeof(pOut->m_materials[0].m_cbMaterialStruct));
 	pOut->m_materials[0].m_cbMaterialStruct.m_diffuse = DirectX::XMFLOAT4(0.7f, 0.7f, 2.0f, 1);
 	pOut->m_materials[0].m_cbMaterialStruct.m_specular = DirectX::XMFLOAT4(1, 1, 1, 1);
-	pOut->m_materials[0].m_cbMaterialStruct.m_isTex = 0;
 	pOut->m_materials[0].m_cbMaterialStruct.m_isToonTex = 0;
-	pOut->m_materials[0].m_cbMaterialStruct.m_power = 0;
+	pOut->m_materials[0].m_cbMaterialStruct.m_specularPower = 0;
 
 	return pOut;
 }
+
 
 bool CGeometoryCreater::CreateRenderTargetPrimitive(CD3D11DrawModel3D * _pOut)
 {
@@ -139,7 +139,7 @@ bool CGeometoryCreater::CreateRenderTargetPrimitive(CD3D11DrawModel3D * _pOut)
 
 	HRESULT hr;
 
-	s_postProcessVertex vertices[4] = {
+	s_screenPolygonVertex vertices[4] = {
 		{ XMFLOAT3(-1, 1, 0), XMFLOAT2(0,0) },
 		{ XMFLOAT3(1, 1, 0), XMFLOAT2(1.0f, 0) },
 		{ XMFLOAT3(-1, -1, 0), XMFLOAT2(0, 1.0f) },
@@ -151,7 +151,7 @@ bool CGeometoryCreater::CreateRenderTargetPrimitive(CD3D11DrawModel3D * _pOut)
 	D3D11_BUFFER_DESC bufferDesc;
 	D3D11_SUBRESOURCE_DATA subResource;
 	ZeroMemory(&bufferDesc, sizeof(D3D11_BUFFER_DESC));
-	bufferDesc.ByteWidth = sizeof(s_postProcessVertex) * 4;
+	bufferDesc.ByteWidth = sizeof(s_screenPolygonVertex) * 4;
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	subResource.pSysMem = vertices;

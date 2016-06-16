@@ -16,7 +16,8 @@ struct s_simplePrimitiveVertex
 	DirectX::XMFLOAT2	uv;
 };
 
-struct s_postProcessVertex
+// フルスクリーンの板ポリ用
+struct s_screenPolygonVertex
 {
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT2 uv;
@@ -34,6 +35,7 @@ public:
 	~CGeometoryCreater();
 
 	std::shared_ptr<CD3D11DrawModel3D> 	CreatePlanePolygon(float size, UINT divisionCount);
+//	std::shared_ptr<CD3D11DrawModel3D>	CreateSphere(float r, UINT divisionCount);
 	bool	CreateRenderTargetPrimitive(CD3D11DrawModel3D* pOut);
 };
 

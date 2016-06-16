@@ -11,7 +11,7 @@ CD3D11ResourceManager::~CD3D11ResourceManager()
 	m_pTextureDatas.clear();
 }
 
-UINT CD3D11ResourceManager::LoadTexture( std::shared_ptr<ID3D11Device> pDevice, const wchar_t * pFileName)
+UINT CD3D11ResourceManager::LoadTexture( std::shared_ptr<ID3D11Device> pDevice, std::wstring filePath, const wchar_t * pFileName)
 {
 	assert(pDevice);
 	if (pFileName == nullptr) {
@@ -21,9 +21,10 @@ UINT CD3D11ResourceManager::LoadTexture( std::shared_ptr<ID3D11Device> pDevice, 
 	HRESULT hr;
 
 	// SRVçÏê¨
+	filePath = filePath + pFileName;
 	std::shared_ptr<s_TextureData> pTexData = std::make_shared<s_TextureData>();
 	ID3D11ShaderResourceView* pSRV;
-	hr = m_texLoader.Load(pDevice, pFileName, &pSRV);
+	hr = m_texLoader.Load(pDevice, filePath.c_str(), &pSRV);
 	if (FAILED(hr)) {
 		return -1;
 	}
@@ -35,6 +36,8 @@ UINT CD3D11ResourceManager::LoadTexture( std::shared_ptr<ID3D11Device> pDevice, 
 	if (FAILED(hr)) {
 		return -1;
 	}
+
+	pTexData->m_fileName = pFileName;
 	pTexData->m_pSamplerState.reset(pSamplerState, D3DComDeleter());
 
 	m_pTextureDatas.push_back(pTexData);
